@@ -3,6 +3,7 @@
 #include "hachage.h"
 
 int main()
-{ printf("tentative")
+{ printf("tentative \n");
   struct annuaire an = *creer();
+  return 0;
 }

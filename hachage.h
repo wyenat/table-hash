@@ -2,11 +2,19 @@
 #define _HACHAGE_
 
 #include <stdint.h>
+/* Je crée un struct personne qui est le couple nom, numéro, et pointeur
+vers la personne suivante */
 
-
-struct annuaire{
+struct personne{
+  struct personne *suiv;
   char nom;
   char num;
+};
+
+/* L'annuaire ne contient qu'un pointeur vers la première personne */
+struct annuaire{
+  int inutile; //Le programme ne m'aurise pas un tableau tout seul.
+  struct personne annu[];
 };
 
 // Cree un nouvel annuaire, initialement vide
