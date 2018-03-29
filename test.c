@@ -1,8 +1,9 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 int main() {
-  char taille = 1;
-  int a[] = {1,2,3,4,5};
-  printf("%c \n", a[taille]);
-  printf("%d \n", taille);
+  char *chara = malloc(sizeof(char));
+  chara = "a";
+  printf("%s \n", chara);
+  printf("%d \n", atoi(chara));
 }

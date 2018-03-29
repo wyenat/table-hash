@@ -14,7 +14,7 @@ struct personne{
 /* L'annuaire ne contient qu'un pointeur vers la première personne */
 struct annuaire{
   int inutile; //Le programme ne m'aurise pas un tableau tout seul.
-  struct personne annu[];
+  struct personne **ann;
 };
 
 // Cree un nouvel annuaire, initialement vide
@@ -55,6 +55,15 @@ const char *inserer(struct annuaire *an, const char *nom, const char *numero);
  */
 const char *rechercher_numero(struct annuaire *an, const char *nom);
 
+/* Prend le numéro et renvoie une clé
+ * Requiert: num chaîne non nulle
+ */
+int hachage(char *num);
+
+/* Initialise un objet de classe personne
+ * Requiert : nom, num chaînes non nulles
+ */
+struct personne *initial(char *nom, char *num);
 
 /*
  * Supprime l'entree de cle nom si elle presente, sans effet sinon */
