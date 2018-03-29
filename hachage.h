@@ -7,8 +7,8 @@ vers la personne suivante */
 
 struct personne{
   struct personne *suiv;
-  char nom;
-  char num;
+  char nom[50];
+  char num[50];
 };
 
 /* L'annuaire ne contient qu'un pointeur vers la première personne */
@@ -61,14 +61,19 @@ const char *rechercher_numero(struct annuaire *an, const char *nom);
 int hachage(char *num);
 
 /* Initialise un objet de classe personne
+ * Le personne suivante de cette personne est elle-même
  * Requiert : nom, num chaînes non nulles
  */
-struct personne *initial(char *nom, char *num);
+struct personne *initial(char nom[50], char num[50]);
 
 /*
  * Supprime l'entree de cle nom si elle presente, sans effet sinon */
 void supprimer(struct annuaire *an, const char *nom);
 
+/* Affiche le nom et le numéro d'une personne
+ * Requiert : une personne.
+ */
+void afficher_personne(struct personne *pers);
 
 
 // debug
