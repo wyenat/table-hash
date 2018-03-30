@@ -5,8 +5,8 @@ all: annu test
 annu: hachage.o annuaire.o
 	$(CC) -o annu hachage.o annuaire.o
 
-test: hachage.o test_creer.o
-	$(CC) -o test hachage.o test_creer.o
+test: hachage.o tester.o
+	$(CC) -o test hachage.o tester.o
 
 hachage.o: hachage.c
 	$(CC) -o hachage.o -c hachage.c $(CFLAGS)
@@ -14,8 +14,8 @@ hachage.o: hachage.c
 annuaire.o: annuaire.c hachage.h
 	$(CC) -o annuaire.o -c annuaire.c $(CFLAGS)
 
-test_creer.o: test_creer.c hachage.h
-	$(CC) -o test_creer.o -c test_creer.c $(CFFLAGS)
+tester.o: tester.c hachage.h
+	$(CC) -o tester.o -c tester.c $(CFFLAGS)
 
 clean:
 	rm -f *.o
