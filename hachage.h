@@ -75,9 +75,8 @@ void supprimer(struct annuaire *an, const char *nom);
  */
 void afficher_personne(struct personne *pers);
 
-
 // debug
-void afficher(struct annuaire *an);
+void afficher_annuaire(struct annuaire *an);
 
 
 #endif

@@ -22,7 +22,20 @@ void liberer(struct annuaire *an) {
 */
 
 void afficher_personne(struct personne *pers)
-{ printf("Nom : %s \t Numéro : %s \n", pers->nom, pers->num);
+{  printf("Nom : %s \t Numéro : %s \n", pers->nom, pers->num);
+  if (pers->suiv != pers) {
+    struct personne *suivi = pers->suiv;
+    afficher_personne(suivi);
+  }
+}
+
+void afficher_annuaire(struct annuaire *an)
+{ printf("Annuaire : \n");
+  for (int i=0; i<=10; i++){
+    printf("\t Clé numéro %d : \n", i);
+    afficher_personne(an->ann[i]);
+  }
+
 }
 
 int hachage(char *num)
@@ -44,15 +57,14 @@ struct personne *initial(char nom[50], char num[50])
   char *numen = malloc(50);
   numen = strncpy(numen, num, 50);
   *init->nom = *strncpy(init->nom, nom, 50);
-  *init->num = *strncpy(init->num, num, 50);
+  *init->num = *strncpy(init->num, num, 60);
   init->suiv = init;
   //struct personne *init = (struct personne *){nomen, numen, init};
   return init;
 }
 
-/* const char *inserer(struct annuaire *an, const char *nom, const char *numero)
-{ struct personne *pers = malloc(sizeof(struct personne));
-  //Début : copie les chaînes de charactères passés en arguments
+ const char *inserer(struct annuaire *an, const char *nom, const char *numero)
+{  //Début : copie les chaînes de charactères passés en arguments
   size_t d_size = sizeof(nom);
   char nomc[d_size];
   strncpy(nomc, nom, d_size);
@@ -61,13 +73,17 @@ struct personne *initial(char nom[50], char num[50])
   char numc[d_size2];
   numc[d_size2 - 1] = '\0';
   //Fin : copie des chaînes de charactères passés en arguments
-  //Début : couple (nom, numéro) passé dans personne
-  pers->nom = *nomc;
-  pers->num = *numc;
-  //Fin : couple (nom, numéro) passé dans personne
-  int cle = hachage(nomc)%10;
-  an->ann[atoi(numc)] = pers;
-} */
+  struct personne *pers = initial(nomc, (char *) numero);
+  int cle = hachage(numc)%10;
+  if (an->ann[cle]->nom == "Pas de nom"){
+    an->ann[cle] = pers;
+    return "NULL";
+  } else {
+    pers->suiv = an->ann[cle];
+    an->ann[cle] = pers;
+    return "";
+  }
+}
 /*
 
 
