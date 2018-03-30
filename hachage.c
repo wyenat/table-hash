@@ -40,15 +40,16 @@ void afficher_annuaire(struct annuaire *an)
 
 int hachage(char *num)
 { int indice_courant = 0;
-  int hash = 5381;
+  int *hash = malloc(128);
+  *hash = 5381;
   char chara_courant = num[indice_courant];
   while (chara_courant != '\0') {
-      hash = hash*33 + chara_courant;
+      *hash = *hash*33 + chara_courant;
       indice_courant++;
       chara_courant = num[indice_courant];
   }
-  hash = -hash%10;
-  return hash;
+  *hash = -*hash%11;
+  return *hash;
 }
 
 struct personne *initial(char nom[50], char num[50])
@@ -75,7 +76,7 @@ struct personne *initial(char nom[50], char num[50])
   numc[d_size2 - 1] = '\0';
   //Fin : copie des chaînes de charactères passés en arguments
   struct personne *pers = initial(nomc, (char *) numero);
-  int *cle = malloc(32);
+  int *cle = malloc(128);
   *cle = hachage(numc);
   if (strncmp(an->ann[*cle]->nom,"Pas de nom", 50)){
     pers->suiv = an->ann[*cle];
@@ -84,17 +85,30 @@ struct personne *initial(char nom[50], char num[50])
   } else {
     an->ann[*cle] = pers;
     return "NULL";
-
   }
 }
-/*
-
 
 const char *rechercher_numero(struct annuaire *an, const char *nom)
-{
+{ struct personne *courant = malloc(sizeof(an->ann[0]));
+  for (int i=0; i<=10; i++){
+    int compteur_sortie = 0;
+    //Je suis obligé de mettre un compteur, j'ignore pourquoi mais on ne sort pas du while sur un nom qui n'existe pas...
+    *courant = *an->ann[i];
+    while( courant != courant->suiv){
+      if (strncmp(courant->nom, nom, 50)==0) {
+        return (const char *) courant->num;
+      }
+      if (compteur_sortie > 1000){
+        break;
+      }
+      courant = courant->suiv;
+      compteur_sortie+=2;
+    }
+  }
+  return "le nom n'est pas dans l'annuaire \n";
 }
 
-
+/*
 void supprimer(struct annuaire *an, const char *nom)
 {
 }
